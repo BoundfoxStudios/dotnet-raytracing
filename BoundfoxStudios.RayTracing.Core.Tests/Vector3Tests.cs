@@ -103,5 +103,43 @@ namespace BoundfoxStudios.RayTracing.Core.Tests
 
       sut.Should().Be(32);
     }
+
+    [Fact]
+    public void CanCalculateUnitVector()
+    {
+      var vector = new Vector3(3, -2, 6);
+
+      var sut = vector.UnitVector;
+
+      sut.X.Should().Be(1/7d * 3);
+      sut.Y.Should().Be(1/7d * -2);
+      sut.Z.Should().Be(1/7d * 6);
+    }
+
+    [Fact]
+    public void CanBeMultipliedByAnotherVector3()
+    {
+      var vectorA = new Vector3(1, 2, 3);
+      var vectorB = new Vector3(4, 5, 6);
+
+      var sut = vectorA * vectorB;
+
+      sut.X.Should().Be(4);
+      sut.Y.Should().Be(10);
+      sut.Z.Should().Be(18);
+    }
+
+    [Fact]
+    public void CanSubtractAnotherVector3()
+    {
+      var vectorA = new Vector3(1, 2, 3);
+      var vectorB = new Vector3(4, 5, 6);
+
+      var sut = vectorA - vectorB;
+
+      sut.X.Should().Be(-3);
+      sut.Y.Should().Be(-3);
+      sut.Z.Should().Be(-3);
+    }
   }
 }

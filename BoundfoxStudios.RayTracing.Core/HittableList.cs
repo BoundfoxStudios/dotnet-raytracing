@@ -7,19 +7,20 @@ namespace BoundfoxStudios.RayTracing.Core
   {
     private readonly IList<IHittable> _objects = new List<IHittable>();
     
-    public bool Hit(Ray ray, double tMin, double tMax, out HitRecord hit)
+    public bool Hit(Ray ray, double tMin, double tMax, ref HitRecord rec)
     {
-      hit = default;
+      HitRecord tempRec = default;
       
       var hitAnything = false;
       var closestSoFar = tMax;
 
       foreach (var @object in _objects)
       {
-        if (@object.Hit(ray, tMin, closestSoFar, out hit))
+        if (@object.Hit(ray, tMin, closestSoFar, ref tempRec))
         {
           hitAnything = true;
-          closestSoFar = hit.T;
+          closestSoFar = tempRec.T;
+          rec = tempRec;
         }
       }
 

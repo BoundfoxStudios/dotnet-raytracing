@@ -13,15 +13,13 @@ namespace BoundfoxStudios.RayTracing.Core.Models
       Radius = radius;
     }
     
-    public bool Hit(Ray ray, double tMin, double tMax, out HitRecord hit)
+    public bool Hit(Ray ray, double tMin, double tMax, ref HitRecord rec)
     {
       var oc = ray.Origin - Center;
       var a = ray.Direction.LengthSquared;
       var halfB = Vector3.Dot(oc, ray.Direction);
       var c = oc.LengthSquared - Radius * Radius;
       var discriminant = halfB * halfB - a * c;
-
-      hit = default;
 
       if (discriminant > 0)
       {
@@ -31,11 +29,11 @@ namespace BoundfoxStudios.RayTracing.Core.Models
 
         if (temp < tMax && temp > tMin)
         {
-          hit.T = temp;
-          hit.Point = ray.At(hit.T);
+          rec.T = temp;
+          rec.Point = ray.At(rec.T);
           
-          var outwardNormal = (hit.Point - Center) / Radius;
-          hit.SetFaceNormal(ray, outwardNormal);
+          var outwardNormal = (rec.Point - Center) / Radius;
+          rec.SetFaceNormal(ray, outwardNormal);
           return true;
         }
 
@@ -43,11 +41,11 @@ namespace BoundfoxStudios.RayTracing.Core.Models
         
         if (temp < tMax && temp > tMin)
         {
-          hit.T = temp;
-          hit.Point = ray.At(hit.T);
+          rec.T = temp;
+          rec.Point = ray.At(rec.T);
           
-          var outwardNormal = (hit.Point - Center) / Radius;
-          hit.SetFaceNormal(ray, outwardNormal);
+          var outwardNormal = (rec.Point - Center) / Radius;
+          rec.SetFaceNormal(ray, outwardNormal);
           return true;
         }
       }

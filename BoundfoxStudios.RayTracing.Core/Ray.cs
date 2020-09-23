@@ -17,9 +17,10 @@ namespace BoundfoxStudios.RayTracing.Core
 
     public Vector3 Color(IHittable world)
     {
-      if (world.Hit(this, 0, double.PositiveInfinity, out var hit))
+      HitRecord rec = default;
+      if (world.Hit(this, 0, double.PositiveInfinity, ref rec))
       {
-        return 0.5d * (hit.Normal + new Vector3(1, 1, 1));
+        return 0.5d * (rec.Normal + new Vector3(1, 1, 1));
       }
 
       var direction = Direction.UnitVector;
